@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  name                String
+  email               String               @unique
+  passwordHash        String?
+  role                Role                 @default(STUDENT)
+  status              UserStatus           @default(PENDING)
+  approvedAt          DateTime?
+  verifiedAt          DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  courseAccess        CourseAccess[]
+  lessonProgress      LessonProgress[]
+  loginHistory        LoginHistory[]
+  passwordSetupTokens PasswordSetupToken[]
+  securityAlerts      SecurityAlert[]
+  sessions            Session[]
+
+  @@map("users")
+}
+
+model PasswordSetupToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_setup_tokens")
+}
+
+model Session {
+  id               String    @id @default(cuid())
+  userId           String
+  sessionTokenHash String    @unique
+  deviceId         String?
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model LoginHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  ip        String?
+  browser   String?
+  os        String?
+  country   String?
+  success   Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("login_history")
+}
+
+model SecurityAlert {
+  id         String    @id @default(cuid())
+  userId     String
+  type       String
+  severity   String
+  details    String?
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("security_alerts")
+}
+
+model Course {
+  id           String          @id @default(cuid())
+  title        String
+  slug         String          @unique
+  description  String?
+  status       String          @default("DRAFT")
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  courseAccess CourseAccess[]
+  sections     CourseSection[]
+
+  @@map("courses")
+}
+
+model CourseSection {
+  id        String   @id @default(cuid())
+  courseId  String
+  title     String
+  sortOrder Int      @default(0)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons   Lesson[]
+
+  @@map("course_sections")
+}
+
+model Lesson {
+  id             String           @id @default(cuid())
+  sectionId      String
+  title          String
+  type           String           @default("VIDEO")
+  youtubeId      String?
+  duration       Int?
+  isPreview      Boolean          @default(false)
+  sortOrder      Int              @default(0)
+  createdAt      DateTime         @default(now())
+  lessonProgress LessonProgress[]
+  section        CourseSection    @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@map("lessons")
+}
+
+model CourseAccess {
+  id         String    @id @default(cuid())
+  userId     String
+  courseId   String
+  status     String    @default("ACTIVE")
+  assignedAt DateTime  @default(now())
+  expiresAt  DateTime?
+  course     Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("course_access")
+}
+
+model LessonProgress {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId     String
+  lesson       Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lastPosition Int       @default(0)
+  percent      Int       @default(0)
+  completedAt  DateTime?
+
+  @@unique([userId, lessonId])
+  @@map("lesson_progress")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  DISABLED
+}
