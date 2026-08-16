@@ -29,74 +29,11 @@ export default function LoginPage() {
 
   return (
     <main className="grid min-h-screen bg-[#f7f8fc] lg:grid-cols-[.95fr_1.05fr]">
-      <section className="relative hidden overflow-hidden bg-[#0b1020] p-10 lg:flex lg:flex-col lg:justify-between">
-        {/* Premium background */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,#111827_0%,#0d1324_48%,#080c17_100%)]" />
-        <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-violet-600/[0.14] blur-[90px]" />
-        <div className="pointer-events-none absolute -bottom-32 right-[-80px] h-96 w-96 rounded-full bg-indigo-500/[0.10] blur-[110px]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(255,255,255,.035),transparent_22rem)]" />
-
-        {/* Brand */}
-        <Link
-          href="/"
-          className="relative z-10 inline-flex w-fit items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 backdrop-blur-xl transition hover:bg-white/[0.06]"
-        >
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 shadow-[0_10px_28px_rgba(124,58,237,.28)]">
-            <GraduationCap className="h-5 w-5 text-white" strokeWidth={2.2} />
-          </span>
-
-          <div>
-            <p className="text-sm font-black tracking-[-0.02em] text-white">
-              Muhammad Kashif <span className="text-violet-300">LMS</span>
-            </p>
-            <p className="mt-0.5 text-[10px] font-medium tracking-wide text-slate-500">
-              Private Learning Portal
-            </p>
-          </div>
-        </Link>
-
-        {/* Main message */}
-        <div className="relative z-10 max-w-[620px]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/[0.15] bg-violet-500/[0.08] px-3.5 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400 shadow-[0_0_10px_rgba(167,139,250,.75)]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-violet-300">
-              Learning Workspace
-            </span>
-          </div>
-
-          <h1 className="mt-6 max-w-[590px] text-[50px] font-black leading-[1.04] tracking-[-0.055em] text-white xl:text-[58px]">
-            Learn with focus.
-            <span className="mt-1 block bg-gradient-to-r from-slate-200 via-violet-200 to-slate-400 bg-clip-text text-transparent">
-              Grow with confidence.
-            </span>
-          </h1>
-
-          <p className="mt-6 max-w-[535px] text-[15px] leading-7 text-slate-400">
-            Access your learning content, continue where you left off and keep
-            track of your progress from one simple workspace.
-          </p>
-
-          <div className="mt-8 flex w-fit items-center gap-3 rounded-xl border border-emerald-400/[0.12] bg-emerald-400/[0.055] px-4 py-3">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-400/[0.08]">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            </span>
-
-            <div>
-              <p className="text-xs font-bold text-emerald-300">
-                Protected access
-              </p>
-              <p className="mt-0.5 text-[10px] text-slate-500">
-                Secure account authentication
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="relative z-10 flex items-center gap-2 text-[11px] text-slate-600">
-          <span className="h-1.5 w-1.5 rounded-full bg-slate-700" />
-          © Muhammad Kashif LMS
-        </div>
+      <section className="premium-sidebar relative hidden overflow-hidden p-10 lg:flex lg:flex-col lg:justify-between">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(91,69,244,.28),transparent_32%),radial-gradient(circle_at_80%_75%,rgba(124,58,237,.16),transparent_30%)]" />
+        <Link href="/" className="relative z-10 flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600"><GraduationCap className="h-5 w-5 text-white" /></span><div><p className="text-sm font-black text-white">Muhammad Kashif LMS</p><p className="mt-0.5 text-[11px] text-slate-500">Private Learning Portal</p></div></Link>
+        <div className="relative z-10 max-w-xl"><p className="text-xs font-bold uppercase tracking-[.2em] text-indigo-300">Student Workspace</p><h1 className="mt-5 text-5xl font-black leading-[1.08] tracking-[-.04em] text-white">Everything you need to keep learning, in one place.</h1><p className="mt-5 max-w-lg text-base leading-7 text-slate-400">Sign in to access your assigned content, continue lessons and track your progress securely.</p><div className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300"><ShieldCheck className="h-4 w-4" /> Protected account access</div></div>
+        <p className="relative z-10 text-xs text-slate-600">© Muhammad Kashif LMS</p>
       </section>
 
       <section className="flex items-center justify-center px-5 py-10 sm:px-8">
