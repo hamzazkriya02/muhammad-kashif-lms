@@ -1,9 +1,10 @@
 "use client";
 
+import BrandLogo from "@/components/branding/BrandLogo";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Eye, EyeOff, GraduationCap, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -41,9 +42,7 @@ export default function LoginPage() {
           href="/"
           className="relative z-10 inline-flex w-fit items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 backdrop-blur-xl transition hover:bg-white/[0.06]"
         >
-          <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 shadow-[0_10px_28px_rgba(124,58,237,.28)]">
-            <GraduationCap className="h-5 w-5 text-white" strokeWidth={2.2} />
-          </span>
+          <BrandLogo />
 
           <div>
             <p className="text-sm font-black tracking-[-0.02em] text-white">

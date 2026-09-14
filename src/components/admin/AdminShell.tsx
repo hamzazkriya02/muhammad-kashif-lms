@@ -1,12 +1,12 @@
 "use client";
 
+import BrandLogo from "@/components/branding/BrandLogo";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   BarChart3,
   BookOpenText,
-  GraduationCap,
   LayoutDashboard,
   Menu,
   Search,
@@ -53,10 +53,7 @@ export default function AdminShell({ userName, userEmail, children }: AdminShell
           onClick={() => setMenuOpen(false)}
           className="group flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.045] px-3.5 py-3 shadow-[0_12px_35px_rgba(0,0,0,.14)] backdrop-blur-xl transition hover:border-violet-400/20 hover:bg-white/[0.065]"
         >
-          <span className="relative grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-xl bg-gradient-to-br from-violet-500 via-indigo-500 to-blue-500 shadow-[0_8px_24px_rgba(99,102,241,.28)]">
-            <GraduationCap className="relative z-10 h-[22px] w-[22px] text-white" strokeWidth={2.1} />
-            <span className="absolute -right-3 -top-3 h-8 w-8 rounded-full bg-white/20 blur-lg" />
-          </span>
+          <BrandLogo />
 
           <div className="min-w-0">
             <p className="truncate text-[15px] font-black tracking-[-0.02em] text-white">

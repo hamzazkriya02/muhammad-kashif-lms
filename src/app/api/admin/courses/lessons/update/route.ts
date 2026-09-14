@@ -1,3 +1,4 @@
+import { parseLessonResources } from "@/lib/lesson-resources";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -13,12 +14,17 @@ export async function POST(request: NextRequest) {
     const lessonId = typeof body?.lessonId === "string" ? body.lessonId : "";
     const title = cleanText(body?.title, 140);
     const youtubeId = extractYouTubeId(body?.youtubeId ?? body?.youtubeUrl);
+    let resources;
+    try { resources = parseLessonResources(body?.resources); }
+    catch (error) {
+      return NextResponse.json({ error: error instanceof Error ? error.message : "Invalid resources" }, { status: 400 });
+    }
 
     if (!lessonId || title.length < 2 || !youtubeId) {
       return NextResponse.json({ error: "Enter a lesson title and a valid YouTube URL or video ID" }, { status: 400 });
     }
 
-    await prisma.lesson.update({ where: { id: lessonId }, data: { title, youtubeId } });
+    await prisma.lesson.update({ where: { id: lessonId }, data: { title, youtubeId, ...(body?.resources !== undefined ? { resources } : {}) } });
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Update lesson error:", error);

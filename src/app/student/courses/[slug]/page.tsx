@@ -4,9 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, ChevronLeft, ChevronRight, Circle, Layers3, PlayCircle } from "lucide-react";
+import ResourceLinks from "@/components/lessons/ResourceLinks";
+import type { LessonResource } from "@/lib/lesson-resources";
 import YoutubePlayer from "@/components/video/YoutubePlayer";
 
-interface Lesson { id: string; title: string; youtubeId: string | null; }
+interface Lesson { id: string; title: string; youtubeId: string | null; resources?: LessonResource[]; }
 interface Section { id: string; title: string; lessons: Lesson[]; }
 interface Course { id: string; title: string; slug: string; description: string | null; sections: Section[]; }
 interface Progress { lessonId: string; percent: number; completedAt: string | null; }
@@ -101,6 +103,7 @@ export default function StudentCoursePage() {
           {activeLesson && (
             <div className="panel p-4 sm:p-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-violet-300">Now Learning</p><h2 className="mt-1 text-lg font-bold text-white">{activeLesson.title}</h2><p className="mt-1 text-xs text-slate-600">Lesson {activeIndex + 1} of {allLessons.length}</p></div><button onClick={toggleComplete} disabled={saving} className={completedIds.has(activeLesson.id) ? "btn-secondary border-emerald-400/15 bg-emerald-500/10 text-emerald-300" : "btn-primary"}>{completedIds.has(activeLesson.id) ? <CheckCircle2 className="h-4 w-4" /> : <Circle className="h-4 w-4" />}{saving ? "Saving..." : completedIds.has(activeLesson.id) ? "Completed" : "Mark Complete"}</button></div>
+              <ResourceLinks resources={activeLesson.resources} />
               <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4"><button disabled={!previousLesson} onClick={() => previousLesson && setActiveLesson(previousLesson)} className="btn-secondary px-3 py-2 text-xs"><ChevronLeft className="h-4 w-4" /> Previous</button><button disabled={!nextLesson} onClick={() => nextLesson && setActiveLesson(nextLesson)} className="btn-secondary px-3 py-2 text-xs">Next <ChevronRight className="h-4 w-4" /></button></div>
             </div>
           )}

@@ -110,6 +110,7 @@ model Lesson {
   title          String
   type           String           @default("VIDEO")
   youtubeId      String?
+  resources      Json             @default("[]")
   duration       Int?
   isPreview      Boolean          @default(false)
   sortOrder      Int              @default(0)
